@@ -173,6 +173,6 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\source\Firebase\MLKit.Common\MLKit.Common.targets" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\source\Firebase\MLKit.Vision\MLKit.Vision.targets" />
   <ItemGroup>
-    <PackageReference Include="Xamarin.Build.Download" Version="0.11.0" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
   </ItemGroup>
 </Project>

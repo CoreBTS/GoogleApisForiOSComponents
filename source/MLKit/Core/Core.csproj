@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Xamarin.Legacy.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>xamarin.ios10;net6.0-ios</TargetFrameworks>
+    <TargetFrameworks>net8.0-ios</TargetFrameworks>
     <NoNFloatUsing Condition="'$(TargetFramework)' == 'xamarin.ios10'">true</NoNFloatUsing>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
     <IsBindingProject>true</IsBindingProject>
     <NoBindingEmbedding>true</NoBindingEmbedding>
-    <SupportedOSPlatformVersion>11.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion>12.0</SupportedOSPlatformVersion>
     <RootNamespace>MLKit.Core</RootNamespace>
     <AssemblyName>MLKit.Core</AssemblyName>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>5.0.0</FileVersion>
+    <AssemblyVersion>6.0.0.0</AssemblyVersion>
+    <FileVersion>6.0.0</FileVersion>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -26,7 +26,7 @@
     <PackageProjectUrl>https://github.com/AdamEssenmacher/GoogleApisForiOSComponents</PackageProjectUrl>
     <PackageLicenseFile>License.md</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageVersion>5.0.0</PackageVersion>
+    <PackageVersion>6.0.0</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\AssemblyInfo.cs" />
@@ -65,9 +65,9 @@
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Build.Download" Version="0.11.0" PrivateAssets="None" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" PrivateAssets="None" />
   </ItemGroup>
-  <ItemGroup>
+<!--   <ItemGroup>
     <ProjectReference Include="..\..\Firebase\Core\Core.csproj" />
   </ItemGroup>
-</Project>
+ --></Project>

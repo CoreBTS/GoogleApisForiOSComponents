@@ -139,6 +139,6 @@
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\Firebase.Analytics\source\Firebase.Analytics\Firebase.Analytics.targets" />
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\source\Firebase.CrashReporting\Firebase.CrashReporting.targets" />
   <ItemGroup>
-    <PackageReference Include="Xamarin.Build.Download" Version="0.11.0" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
   </ItemGroup>
 </Project>

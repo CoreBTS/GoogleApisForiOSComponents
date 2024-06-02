@@ -124,7 +124,7 @@
     <BundleResource Include="Resources\Icon%402x.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Build.Download" Version="0.11.0" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
     <PackageReference Include="Xamarin.Firebase.iOS.Analytics" Version="8.10.0" />
     <PackageReference Include="Xamarin.Firebase.iOS.Core" Version="8.10.0" />
     <PackageReference Include="Xamarin.Firebase.iOS.InstanceID" Version="7.11.0" />

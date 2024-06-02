@@ -136,7 +136,7 @@
     <InterfaceDefinition Include="Main.storyboard" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Build.Download" Version="0.11.0" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" />
     <PackageReference Include="Xamarin.Google.iOS.AppInvite" Version="1.0.2.4" />
     <PackageReference Include="Xamarin.Google.iOS.Core" Version="3.1.0.4" />
     <PackageReference Include="Xamarin.Google.iOS.SignIn" Version="5.0.2.3" />
