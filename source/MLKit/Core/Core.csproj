@@ -49,6 +49,27 @@
        NativeReference tag for the iOS binding and for the .targets file -->
   <Import Project="Core.targets" />
   <ItemGroup>
+    <_NativeReference Include="..\..\..\externals\FBLPromises.xcframework">
+      <_Id>$(_FBLPromisesId)</_Id>
+    </_NativeReference>
+    <_NativeReference Include="..\..\..\externals\GoogleDataTransport.xcframework">
+      <_Id>$(_GoogleDataTransportId)</_Id>
+    </_NativeReference>
+    <_NativeReference Include="..\..\..\externals\GoogleToolboxForMac.xcframework">
+      <_Id>$(_GoogleToolboxForMacId)</_Id>
+    </_NativeReference>
+    <_NativeReference Include="..\..\..\externals\GoogleUtilities.xcframework">
+      <_Id>$(_GoogleUtilitiesId)</_Id>
+    </_NativeReference>
+    <_NativeReference Include="..\..\..\externals\GoogleUtilitiesComponents.xcframework">
+      <_Id>$(_GoogleUtilitiesComponentsId)</_Id>
+    </_NativeReference>
+    <_NativeReference Include="..\..\..\externals\GTMSessionFetcher.xcframework">
+      <_Id>$(_GTMSessionFetcherId)</_Id>
+    </_NativeReference>
+    <_NativeReference Include="..\..\..\externals\nanopb.xcframework">
+      <_Id>$(_nanopbId)</_Id>
+    </_NativeReference>
     <_NativeReference Include="..\..\..\externals\SSZipArchive.xcframework">
       <_Id>$(_SSZipArchiveId)</_Id>
     </_NativeReference>
