@@ -253,7 +253,9 @@ void SetArtifactsPodSpecs()
 		PodSpec.Create ("MLKitTextRecognitionCommon",      "3.0.0")
 	};
 	MLKIT_VISION.PodSpecs = new[] {
-		PodSpec.Create ("MLKitVision",                     "7.0.0")
+		PodSpec.Create ("MLKitVision",                     "7.0.0"),
+		PodSpec.Create ("MLKitImageLabelingCommon",        "7.0.0"),
+		PodSpec.Create ("MLKitObjectDetectionCommon",      "7.0.0")
 	};
 	MLKIT_TEXT_RECOGNITION_LATIN.PodSpecs = new[] {
 		PodSpec.Create ("MLKitTextRecognition",            "4.0.0")
