@@ -97,7 +97,7 @@ On .NET8, you must set the following property. Note that this will increase your
 </PropertyGroup>
 ```
 
-## Building
+# Building
 
 ### Prerequisites
 
