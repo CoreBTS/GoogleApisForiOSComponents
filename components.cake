@@ -114,16 +114,16 @@ void SetArtifactsDependencies()
 	GOOGLE_SIGN_IN_ARTIFACT.Dependencies = new[] { FIREBASE_CORE_ARTIFACT };
 	GOOGLE_TAG_MANAGER_ARTIFACT.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT, FIREBASE_ANALYTICS_ARTIFACT };
 
-	MLKIT_CORE_ARTIFACT.Dependencies = null;
+	MLKIT_CORE_ARTIFACT.Dependencies = new[] { FIREBASE_CORE_ARTIFACT };
 	MLKIT_TEXT_RECOGNITION.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
-	MLKIT_VISION.Dependencies = new[] { MLKIT_CORE_ARTIFACT };
+	MLKIT_VISION.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
 	MLKIT_TEXT_RECOGNITION_LATIN.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
 	MLKIT_TEXT_RECOGNITION_CHINESE.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
 	MLKIT_TEXT_RECOGNITION_DEVANAGARI.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
 	MLKIT_TEXT_RECOGNITION_JAPANESE.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
 	MLKIT_TEXT_RECOGNITION_KOREAN.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
 	MLKIT_FACE_DETECTION.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
-	MLKIT_BARCODE_SCANNING.Dependencies = new[] { MLKIT_CORE_ARTIFACT, MLKIT_VISION };
+	MLKIT_BARCODE_SCANNING.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_VISION };
 	MLKIT_DIGITAL_INK_RECOGNITION.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
 	MLKIT_IMAGE_LABELING.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_VISION };
 	MLKIT_OBJECT_DETECTION.Dependencies = new[] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_VISION };
@@ -172,7 +172,7 @@ void SetArtifactsPodSpecs()
 		PodSpec.Create ("GoogleDataTransport",         "9.4.1",      frameworkSource: FrameworkSource.Pods),
 		PodSpec.Create ("PromisesObjC",                "2.4.0",      frameworkSource: FrameworkSource.Pods, frameworkName: "FBLPromises", targetName: "PromisesObjC"),
 		PodSpec.Create ("PromisesSwift",               "2.4.0",      frameworkSource: FrameworkSource.Pods, frameworkName: "Promises", targetName: "PromisesSwift"),
-		PodSpec.Create ("GoogleUtilities",             "7.13.0",     frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "AppDelegateSwizzler", "Environment", "Logger", "ISASwizzler", "MethodSwizzler", "Network", "NSData+zlib", "Reachability", "UserDefaults", }),
+		PodSpec.Create ("GoogleUtilities",             "7.13.3",     frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "AppDelegateSwizzler", "Environment", "Logger", "ISASwizzler", "MethodSwizzler", "Network", "NSData+zlib", "Privacy", "Reachability", "UserDefaults", }),
 		PodSpec.Create ("nanopb",                      "2.30910.0",  frameworkSource: FrameworkSource.Pods),
 		PodSpec.Create ("leveldb-library",             "1.22.5",     frameworkSource: FrameworkSource.Pods, frameworkName: "leveldb"),
 	};
@@ -237,22 +237,23 @@ void SetArtifactsPodSpecs()
 
 	// MLKit components
 	MLKIT_CORE_ARTIFACT.PodSpecs = new[] {
-		PodSpec.Create ("GoogleDataTransport",         "9.4.1",      frameworkSource: FrameworkSource.Pods),
+		//PodSpec.Create ("GoogleDataTransport",         "9.4.1",      frameworkSource: FrameworkSource.Pods),
 		PodSpec.Create ("GoogleToolboxForMac",         "4.2.1",      frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "Defines", "Logger", "NSData+zlib"}),
-		PodSpec.Create ("GoogleUtilities",             "7.13.3",     frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "Environment", "Logger", "Privacy", "UserDefaults" }),
+		//PodSpec.Create ("GoogleUtilities",             "7.13.3",     frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "Environment", "Logger", "Privacy", "UserDefaults" }),
 		PodSpec.Create ("GoogleUtilitiesComponents",   "1.1.0",      frameworkSource: FrameworkSource.Pods),
-		PodSpec.Create ("GTMSessionFetcher",           "3.4.1",      frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "Core" }),
-		PodSpec.Create ("PromisesObjC",                "2.4.0",      frameworkSource: FrameworkSource.Pods, frameworkName: "FBLPromises", targetName: "PromisesObjC"),
+		//PodSpec.Create ("GTMSessionFetcher",           "3.4.1",      frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "Core" }),
+		//PodSpec.Create ("PromisesObjC",                "2.4.0",      frameworkSource: FrameworkSource.Pods, frameworkName: "FBLPromises", targetName: "PromisesObjC"),
+		//PodSpec.Create ("TensorFlowLite",              "~> 1.13.1"),
 		PodSpec.Create ("MLKitCommon",                 "11.0.0"),
-		PodSpec.Create ("MLImage",                     "1.0.0-beta5"),
 		//PodSpec.Create ("MLKitMDD",                    "7.0.0"),
-		PodSpec.Create ("nanopb",                      "2.30910.0",  frameworkSource: FrameworkSource.Pods),
+		//PodSpec.Create ("nanopb",                      "2.30910.0",  frameworkSource: FrameworkSource.Pods),
 		PodSpec.Create ("SSZipArchive",                "2.4.2",      frameworkSource: FrameworkSource.Pods),
 	};
 	MLKIT_TEXT_RECOGNITION.PodSpecs = new[] {
 		PodSpec.Create ("MLKitTextRecognitionCommon",      "3.0.0")
 	};
 	MLKIT_VISION.PodSpecs = new[] {
+		PodSpec.Create ("MLImage",                         "1.0.0-beta5"),
 		PodSpec.Create ("MLKitVision",                     "7.0.0"),
 		PodSpec.Create ("MLKitImageLabelingCommon",        "7.0.0"),
 		PodSpec.Create ("MLKitObjectDetectionCommon",      "7.0.0")

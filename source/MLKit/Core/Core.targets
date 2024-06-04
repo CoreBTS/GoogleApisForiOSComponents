@@ -3,36 +3,20 @@
     <_MLKitCoreAssemblyName>MLKit.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=null</_MLKitCoreAssemblyName>
     <_MLKitCoreItemsFolder>MLKitCommon-11.0.0</_MLKitCoreItemsFolder>
     <_MLKitCoreSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLKitCoreItemsFolder)\Frameworks\</_MLKitCoreSDKBaseFolder>
-    <_MLImageItemsFolder>MLImage-1.0.0-beta5</_MLImageItemsFolder>
-    <_MLImageSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLImageItemsFolder)\Frameworks\</_MLImageSDKBaseFolder>
-    <!--<_MLKitVisionItemsFolder>MLKitVision-7.0.0</_MLKitVisionItemsFolder>
-    <_MLKitVisionSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLKitVisionItemsFolder)\Frameworks\</_MLKitVisionSDKBaseFolder>-->
-    <!--<_MLKitMDDItemsFolder>MLKitMDD-7.0.0</_MLKitMDDItemsFolder>
-    <_MLKitMDDSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLKitMDDItemsFolder)\Frameworks\</_MLKitMDDSDKBaseFolder>-->
-    <!--<_MLKitLinkFirebaseItemsFolder>MLKitLinkFirebase-5.0.0</_MLKitLinkFirebaseItemsFolder>
-    <_MLKitLinkFirebaseSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLKitLinkFirebaseItemsFolder)\Frameworks\</_MLKitLinkFirebaseSDKBaseFolder>-->
+    <_MLKitMDDItemsFolder>MLKitMDD-7.0.0</_MLKitMDDItemsFolder>
+    <_MLKitMDDSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLKitMDDItemsFolder)\Frameworks\</_MLKitMDDSDKBaseFolder>
+    <_MLKitLibFolder>net8.0-ios17.2</_MLKitLibFolder>
+    <_MLKitLibFolder Condition="'$(TargetFramework)' == 'xamarin.ios10'">xamarinios10</_MLKitLibFolder>
   </PropertyGroup>
   <ItemGroup Condition="('$(OutputType)'!='Library' OR '$(IsAppExtension)'=='True')">
     <XamarinBuildDownload Include="$(_MLKitCoreItemsFolder)">
       <Url>https://dl.google.com/dl/cpdc/85bda285a1954024/MLKitCommon-11.0.0.tar.gz</Url>
       <Kind>Tgz</Kind>
     </XamarinBuildDownload>
-    <!-- <XamarinBuildDownload Include="$(_MLKitLinkFirebaseItemsFolder)">
-      <Url>https://dl.google.com/dl/cpdc/a47e7f053d199030/MLKitLinkFirebase-5.0.0.tar.gz</Url>
-      <Kind>Tgz</Kind>
-    </XamarinBuildDownload> -->
-    <XamarinBuildDownload Include="$(_MLImageItemsFolder)">
-      <Url>https://dl.google.com/dl/cpdc/10ddbf30d0514f6d/MLImage-1.0.0-beta5.tar.gz</Url>
-      <Kind>Tgz</Kind>
-    </XamarinBuildDownload>
-    <!--<XamarinBuildDownload Include="$(_MLKitVisionItemsFolder)">
-      <Url>https://dl.google.com/dl/cpdc/a82625c72bbef814/MLKitVision-7.0.0.tar.gz</Url>
-      <Kind>Tgz</Kind>
-    </XamarinBuildDownload>-->
-    <!--<XamarinBuildDownload Include="$(_MLKitMDDItemsFolder)">
+    <XamarinBuildDownload Include="$(_MLKitMDDItemsFolder)">
       <Url>https://dl.google.com/dl/cpdc/f0c23efdc5ebd83a/MLKitMDD-7.0.0.tar.gz</Url>
       <Kind>Tgz</Kind>
-    </XamarinBuildDownload> -->
+    </XamarinBuildDownload>
     <XamarinBuildRestoreResources Include="_MLKitCrDownloadedItems" />
   </ItemGroup>
   <Target Name="_MLKitCrDownloadedItems">
@@ -45,71 +29,29 @@
         <LinkerFlags>-lc++ -lsqlite3 -lz</LinkerFlags>
         <Frameworks>Foundation LocalAuthentication</Frameworks>
       </NativeReference>
-      <!-- From https://dl.google.com/dl/cpdc/a47e7f053d199030/MLKitLinkFirebase-5.0.0.tar.gz -->
-      <!-- <NativeReference Include="$(_MLKitLinkFirebaseSDKBaseFolder)MLKitLinkFirebase.framework">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-        <LinkerFlags>-lc++ -lsqlite3 -lz</LinkerFlags>
-        <Frameworks>Foundation LocalAuthentication</Frameworks>
-      </NativeReference> -->
-      <!-- From https://dl.google.com/dl/cpdc/10ddbf30d0514f6d/MLImage-1.0.0-beta5.tar.gz -->
-      <NativeReference Include="$(_MLImageSDKBaseFolder)MLImage.framework">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-        <Frameworks>CoreGraphics CoreMedia CoreVideo Foundation UIKit</Frameworks>
-      </NativeReference>
-      <!-- From https://dl.google.com/dl/cpdc/a82625c72bbef814/MLKitVision-7.0.0.tar.gz -->
-      <!-- <NativeReference Include="$(_MLKitVisionSDKBaseFolder)MLKitVision.framework">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-        <Frameworks>Accelerate AVFoundation CoreGraphics CoreMedia CoreVideo Foundation UIKit</Frameworks>
-      </NativeReference> -->
       <!-- From https://dl.google.com/dl/cpdc/f0c23efdc5ebd83a/MLKitMDD-7.0.0.tar.gz -->
-      <!--<NativeReference Include="$(_MLKitMDDSDKBaseFolder)MLKitMDD.framework">
+      <NativeReference Include="$(_MLKitMDDSDKBaseFolder)MLKitMDD.framework">
         <Kind>Framework</Kind>
         <SmartLink>True</SmartLink>
         <ForceLoad>True</ForceLoad>
         <LinkerFlags>-lc++</LinkerFlags>
         <Frameworks>Accelerate AVFoundation CoreGraphics CoreMedia CoreVideo Foundation UIKit</Frameworks>
-      </NativeReference>-->
-    </ItemGroup>
+      </NativeReference>
+      </ItemGroup>
   </Target>
   <PropertyGroup>
-    <_FBLPromisesId>FBLPromises</_FBLPromisesId>
-    <_GoogleDataTransportId>GoogleDataTransport</_GoogleDataTransportId>
     <_GoogleToolboxForMacId>GoogleToolboxForMac</_GoogleToolboxForMacId>
-    <_GoogleUtilitiesId>GoogleUtilities</_GoogleUtilitiesId>
     <_GoogleUtilitiesComponentsId>GoogleUtilitiesComponents</_GoogleUtilitiesComponentsId>
-    <_GTMSessionFetcherId>GTMSessionFetcher</_GTMSessionFetcherId>
-    <_nanopbId>nanopb</_nanopbId>
     <_SSZipArchiveId>SSZipArchive</_SSZipArchiveId>
   </PropertyGroup>
   <ItemGroup Condition="('$(OutputType)' != 'Library' OR '$(IsAppExtension)' == 'True') AND ('$(TargetFrameworks)' == '' AND '$(TargetFramework)' == '')">
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\FBLPromises.xcframework">
-      <_Id>$(_FBLPromisesId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\GoogleDataTransport.xcframework">
-      <_Id>$(_GoogleDataTransportId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\GoogleToolboxForMac.xcframework">
+    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\$(_MLKitLibFolder)\MLKit.Core.resources\GoogleToolboxForMac.xcframework">
       <_Id>$(_GoogleToolboxForMacId)</_Id>
     </_NativeReference>
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\GoogleUtilities.xcframework">
-      <_Id>$(_GoogleUtilitiesId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\GoogleUtilitiesComponents.xcframework">
+    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\$(_MLKitLibFolder)\MLKit.Core.resources\GoogleUtilitiesComponents.xcframework">
       <_Id>$(_GoogleUtilitiesComponentsId)</_Id>
     </_NativeReference>
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\GTMSessionFetcher.xcframework">
-      <_Id>$(_GTMSessionFetcherId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\nanopb.xcframework">
-      <_Id>$(_nanopbId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\net8.0-ios17.2\MLKit.Core.resources\SSZipArchive.xcframework">
+    <_NativeReference Include="$(MSBuildThisFileDirectory)..\lib\$(_MLKitLibFolder)\MLKit.Core.resources\SSZipArchive.xcframework">
       <_Id>$(_SSZipArchiveId)</_Id>
     </_NativeReference>
   </ItemGroup>
@@ -117,42 +59,13 @@
           BeforeTargets="ResolveNativeReferences"
           Condition="('$(TargetFrameworks)' == '' AND '$(TargetFramework)' == '') OR '$(IsBindingProject)' == 'true'">
     <ItemGroup>
-      <_NativeReference Update="@(_NativeReference)" Condition="'%(_NativeReference._Id)' == '$(_FBLPromisesId)'">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-      </_NativeReference>
-      <_NativeReference Update="@(_NativeReference)" Condition="'%(_NativeReference._Id)' == '$(_GoogleDataTransportId)'">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-        <Frameworks>CoreTelephony FBLPromises GoogleUtilities Security SystemConfiguration nanopb</Frameworks>
-        <LinkerFlags>-lz</LinkerFlags>
-      </_NativeReference>
       <_NativeReference Update="@(_NativeReference)" Condition="'%(_NativeReference._Id)' == '$(_GoogleToolboxForMacId)'">
         <Kind>Framework</Kind>
         <SmartLink>True</SmartLink>
         <ForceLoad>True</ForceLoad>
         <LinkerFlags>-lz</LinkerFlags>
       </_NativeReference>
-      <_NativeReference Update="@(_NativeReference)" Condition="'%(_NativeReference._Id)' == '$(_GoogleUtilitiesId)'">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-        <Frameworks>FBLPromises Security</Frameworks>
-      </_NativeReference>
       <_NativeReference Update="@(_NativeReference)" Condition="'%(_NativeReference._Id)' == '$(_GoogleUtilitiesComponentsId)'">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-      </_NativeReference>
-      <_NativeReference Update="@(_NativeReference)" Condition="'%(_NativeReference._Id)' == '$(_GTMSessionFetcherId)'">
-        <Kind>Framework</Kind>
-        <SmartLink>True</SmartLink>
-        <ForceLoad>True</ForceLoad>
-        <Frameworks>Security</Frameworks>
-      </_NativeReference>
-      <_NativeReference Update="@(_NativeReference)" Condition="'%(_NativeReference._Id)' == '$(_nanopbId)'">
         <Kind>Framework</Kind>
         <SmartLink>True</SmartLink>
         <ForceLoad>True</ForceLoad>

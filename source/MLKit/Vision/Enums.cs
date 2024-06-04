@@ -1,9 +1,11 @@
 ﻿using System;
 using ObjCRuntime;
 
-namespace MLKit.Vision {
+namespace MLKit.Vision
+{
 	[Native]
-	public enum DetectorMode : long {
+	public enum ObjectDetectorMode : long
+	{
 		SingleImage = 0,
 		Stream = 1
 	}

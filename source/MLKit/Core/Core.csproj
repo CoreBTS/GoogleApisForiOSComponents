@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Xamarin.Legacy.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0-ios</TargetFrameworks>
+    <TargetFrameworks>xamarin.ios10;net8.0-ios</TargetFrameworks>
     <NoNFloatUsing Condition="'$(TargetFramework)' == 'xamarin.ios10'">true</NoNFloatUsing>
     <Nullable>enable</Nullable>
     <ImplicitUsings>true</ImplicitUsings>
@@ -49,26 +49,11 @@
        NativeReference tag for the iOS binding and for the .targets file -->
   <Import Project="Core.targets" />
   <ItemGroup>
-    <_NativeReference Include="..\..\..\externals\FBLPromises.xcframework">
-      <_Id>$(_FBLPromisesId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="..\..\..\externals\GoogleDataTransport.xcframework">
-      <_Id>$(_GoogleDataTransportId)</_Id>
-    </_NativeReference>
     <_NativeReference Include="..\..\..\externals\GoogleToolboxForMac.xcframework">
       <_Id>$(_GoogleToolboxForMacId)</_Id>
     </_NativeReference>
-    <_NativeReference Include="..\..\..\externals\GoogleUtilities.xcframework">
-      <_Id>$(_GoogleUtilitiesId)</_Id>
-    </_NativeReference>
     <_NativeReference Include="..\..\..\externals\GoogleUtilitiesComponents.xcframework">
       <_Id>$(_GoogleUtilitiesComponentsId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="..\..\..\externals\GTMSessionFetcher.xcframework">
-      <_Id>$(_GTMSessionFetcherId)</_Id>
-    </_NativeReference>
-    <_NativeReference Include="..\..\..\externals\nanopb.xcframework">
-      <_Id>$(_nanopbId)</_Id>
     </_NativeReference>
     <_NativeReference Include="..\..\..\externals\SSZipArchive.xcframework">
       <_Id>$(_SSZipArchiveId)</_Id>
@@ -87,8 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" PrivateAssets="None" />
-  </ItemGroup>
-<!--   <ItemGroup>
     <ProjectReference Include="..\..\Firebase\Core\Core.csproj" />
   </ItemGroup>
- --></Project>
+
+</Project>
