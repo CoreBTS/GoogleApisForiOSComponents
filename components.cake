@@ -85,7 +85,7 @@ var ARTIFACTS = new Dictionary<string, Artifact> {
 	// { "MLKit.DigitalInkRecognition",      MLKIT_DIGITAL_INK_RECOGNITION },
 };
 
-void SetArtifactsDependencies()
+void SetArtifactsDependencies ()
 {
 	FIREBASE_AB_TESTING_ARTIFACT.Dependencies              = new [] { FIREBASE_CORE_ARTIFACT };
 	FIREBASE_ANALYTICS_ARTIFACT.Dependencies               = new [] { FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT };
