@@ -236,7 +236,7 @@ void SetArtifactsPodSpecs ()
 	};
 
 	// MLKit components
-	MLKIT_CORE_ARTIFACT.PodSpecs = new[] {
+	MLKIT_CORE_ARTIFACT.PodSpecs = new [] { 
 		PodSpec.Create ("MLKitCommon",                     "11.0.0"),
 		PodSpec.Create ("MLKitVision",                     "7.0.0"),
 		PodSpec.Create ("MLImage",                         "1.0.0-beta5"),
@@ -270,7 +270,7 @@ void SetArtifactsPodSpecs ()
 	MLKIT_FACE_DETECTION.PodSpecs = new [] { 
 		PodSpec.Create ("MLKitFaceDetection",              "1.5.0")
 	};
-	MLKIT_BARCODE_SCANNING.PodSpecs = new[] {
+	MLKIT_BARCODE_SCANNING.PodSpecs = new [] { 
 		PodSpec.Create ("MLKitBarcodeScanning",            "5.0.0")
 	};
 	MLKIT_DIGITAL_INK_RECOGNITION.PodSpecs = new [] { 
