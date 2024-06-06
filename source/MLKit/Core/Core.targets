@@ -3,8 +3,6 @@
     <_MLKitCoreAssemblyName>MLKit.Core, Version=6.0.0.0, Culture=neutral, PublicKeyToken=null</_MLKitCoreAssemblyName>
     <_MLKitCommonItemsFolder>MLKCommon-11.0.0</_MLKitCommonItemsFolder>
     <_MLKitCommonSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLKitCommonItemsFolder)\Frameworks\</_MLKitCommonSDKBaseFolder>
-    <_MLImageItemsFolder>MLImg-1.0.0beta5</_MLImageItemsFolder>
-    <_MLImageSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLImageItemsFolder)\Frameworks\</_MLImageSDKBaseFolder>
     <_MLKitVisionItemsFolder>MLKVision-7.0.0</_MLKitVisionItemsFolder>
     <_MLKitVisionSDKBaseFolder>$(XamarinBuildDownloadDir)$(_MLKitVisionItemsFolder)\Frameworks\</_MLKitVisionSDKBaseFolder>
     <_MLImageItemsFolder>MLImage-1.0.0-beta5</_MLImageItemsFolder>
