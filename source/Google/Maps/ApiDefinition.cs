@@ -78,23 +78,62 @@ namespace Google.Maps
 		[Field ("kGMSMarkerLayerRotation", "__Internal")]
 		NSString MarkerLayerRotation { get; }
 
+		[Field ("kGMSMarkerLayerOpacity", "__Internal")]
+		NSString MarkerLayerOpacity { get; }
+
 		[Field ("kGMSAccessibilityCompass", "__Internal")]
 		NSString AccessibilityCompass { get; }
 
 		[Field ("kGMSAccessibilityMyLocation", "__Internal")]
 		NSString AccessibilityMyLocation { get; }
 
-		[Field ("kGMSAccessiblityOutOfQuota", "__Internal")]
-		NSString AccessiblityOutOfQuota { get; }
+		[Field ("kGMSAccessibilityOutOfQuota", "__Internal")]
+		NSString AccessibilityOutOfQuota { get; }
 
 		[Field ("kGMSEquatorProjectedMeter", "__Internal")]
 		double EquatorProjectedMeter { get; }
+
+		// extern const GMSFeatureType _Nonnull GMSFeatureTypeAdministrativeAreaLevel1;
+		[Field ("GMSFeatureTypeAdministrativeAreaLevel1", "__Internal")]
+		NSString FeatureTypeAdministrativeAreaLevel1 { get; }
+
+		// extern const GMSFeatureType _Nonnull GMSFeatureTypeAdministrativeAreaLevel2;
+		[Field ("GMSFeatureTypeAdministrativeAreaLevel2", "__Internal")]
+		NSString FeatureTypeAdministrativeAreaLevel2 { get; }
+
+		// extern const GMSFeatureType _Nonnull GMSFeatureTypeCountry;
+		[Field ("GMSFeatureTypeCountry", "__Internal")]
+		NSString FeatureTypeCountry { get; }
+
+		// extern const GMSFeatureType _Nonnull GMSFeatureTypeLocality;
+		[Field ("GMSFeatureTypeLocality", "__Internal")]
+		NSString FeatureTypeLocality { get; }
+
+		// extern const GMSFeatureType _Nonnull GMSFeatureTypePostalCode;
+		[Field ("GMSFeatureTypePostalCode", "__Internal")]
+		NSString FeatureTypePostalCode { get; }
+
+		// extern const GMSFeatureType _Nonnull GMSFeatureTypeSchoolDistrict;
+		[Field ("GMSFeatureTypeSchoolDistrict", "__Internal")]
+		NSString FeatureTypeSchoolDistrict { get; }
+
+		// extern const GMSFeatureType _Nonnull GMSFeatureTypeDataset;
+		[Field ("GMSFeatureTypeDataset", "__Internal")]
+		NSString FeatureTypeDataset { get; }
+
+		// extern const CGFloat GMSFeatureStyleStrokeWidthUnspecified __attribute__((swift_name("FeatureStyle.strokeWidthUnspecified")));
+		[Field ("GMSFeatureStyleStrokeWidthUnspecified", "__Internal")]
+		nfloat FeatureStyleStrokeWidthUnspecified { get; }
+
+		// extern const CGFloat GMSFeatureStylePointRadiusUnspecified __attribute__((swift_name("FeatureStyle.pointRadiusUnspecified")));
+		[Field ("GMSFeatureStylePointRadiusUnspecified", "__Internal")]
+		nfloat FeatureStylePointRadiusUnspecified { get; }
 	}
 
 	#endregion
 
 	[BaseType (typeof (NSObject), Name = "GMSAddress")]
-	interface Address : INSCopying
+	interface Address : INSCopying, INSSecureCoding
 	{
 		[Export ("coordinate")]
 		CLLocationCoordinate2D Coordinate { get; }
@@ -136,7 +175,6 @@ namespace Google.Maps
 		string AddressLine2 { get; }
 	}
 
-	[DisableDefaultCtor]
 	[BaseType (typeof (CALayer), Name = "GMSCALayer")]
 	interface Layer
 	{
@@ -562,6 +600,34 @@ namespace Google.Maps
 		// - (void)mapViewSnapshotReady:(GMSMapView *)mapView;
 		[Export ("mapViewSnapshotReady:"), EventArgs ("GMSSnapshotReady")]
 		void SnapshotReady (MapView mapView);
+
+		// @optional -(void)mapView:(GMSMapView * _Nonnull)mapView didChangeMapCapabilities:(GMSMapCapabilityFlags)mapCapabilities;
+		[Export ("mapView:didChangeMapCapabilities:"), EventArgs ("GMSMapCapabilities"), EventName ("MapCapabilitiesChanged")]
+		void DidChangeMapCapabilities (MapView mapView, MapCapabilityFlags mapCapabilities);
+
+		// @optional -(void)mapView:(GMSMapView * _Nonnull)mapView didTapFeatures:(NSArray<id<GMSFeature>> * _Nonnull)features inFeatureLayer:(GMSFeatureLayer * _Nonnull)featureLayer atLocation:(CLLocationCoordinate2D)location;
+		[Export ("mapView:didTapFeatures:inFeatureLayer:atLocation:"), EventArgs ("GMSFeaturesTapped"), EventName ("FeaturesTapped")]
+		void DidTapFeatures (MapView mapView, Feature [] features, FeatureLayer featureLayer, CLLocationCoordinate2D location);
+	}
+
+	// @interface GMSMapViewOptions : NSObject
+	[BaseType (typeof (NSObject), Name = "GMSMapViewOptions")]
+	interface MapViewOptions {
+		// @property (nonatomic) CGRect frame;
+		[Export ("frame", ArgumentSemantic.Assign)]
+		CGRect Frame { get; set; }
+
+		// @property (nonatomic) GMSCameraPosition * _Nullable camera;
+		[NullAllowed, Export ("camera", ArgumentSemantic.Assign)]
+		CameraPosition Camera { get; set; }
+
+		// @property (nonatomic) GMSMapID * _Nullable mapID;
+		[NullAllowed, Export ("mapID", ArgumentSemantic.Assign)]
+		MapId MapId { get; set; }
+
+		// @property (nonatomic) UIColor * _Nullable backgroundColor;
+		[NullAllowed, Export ("backgroundColor", ArgumentSemantic.Assign)]
+		UIColor BackgroundColor { get; set; }
 	}
 
 	[BaseType (typeof (UIView), Name = "GMSMapView",
@@ -569,9 +635,6 @@ namespace Google.Maps
 		Events = new Type [] { typeof (MapViewDelegate) } )]
 	interface MapView
 	{
-
-		[Export ("initWithFrame:")]
-		NativeHandle Constructor (CGRect frame);
 
 		[NullAllowed]
 		[Export ("delegate", ArgumentSemantic.Assign)]
@@ -604,6 +667,11 @@ namespace Google.Maps
 		[NullAllowed]
 		[Export ("mapStyle")]
 		MapStyle MapStyle { get; set; }
+
+		// @property (nonatomic) UIUserInterfaceStyle overrideUserInterfaceStyle;
+		[Export ("overrideUserInterfaceStyle", ArgumentSemantic.Assign)]
+		[New]
+		UIUserInterfaceStyle OverrideUserInterfaceStyle { get; set; }
 
 		[Export ("minZoom")]
 		float MinZoom { get; }
@@ -646,13 +714,41 @@ namespace Google.Maps
 		[Export ("cameraTargetBounds")]
 		CoordinateBounds CameraTargetBounds { get; set; }
 
-		// -(instancetype _Nonnull)initWithFrame:(CGRect)frame camera:(GMSCameraPosition * _Nonnull)camera;
-		[Export ("initWithFrame:camera:")]
-		NativeHandle Constructor (CGRect frame, CameraPosition camera);
+		// @property (readonly, nonatomic) GMSMapCapabilityFlags mapCapabilities;
+		[Export ("mapCapabilities")]
+		MapCapabilityFlags MapCapabilities { get; }
 
+		// -(instancetype _Nonnull)initWithOptions:(GMSMapViewOptions * _Nonnull)options __attribute__((objc_designated_initializer));
+		[Export ("initWithOptions:")]
+		[DesignatedInitializer]
+		NativeHandle Constructor (MapViewOptions options);
+
+		// -(instancetype _Nonnull)initWithFrame:(CGRect)frame __attribute__((deprecated("Use -init or -initWithOptions: instead.")));
+		[Obsolete ("Use constructor with MapViewOptions instead.")]
+		[Export ("initWithFrame:")]
+		NativeHandle Constructor (CGRect frame);
+
+		// +(instancetype _Nonnull)mapWithFrame:(CGRect)frame camera:(GMSCameraPosition * _Nonnull)camera __attribute__((deprecated("Use -init or -initWithOptions: instead.")));
+		[Obsolete ("Use constructor with MapViewOptions instead.")]
 		[Static]
 		[Export ("mapWithFrame:camera:")]
 		MapView FromCamera (CGRect frame, CameraPosition camera);
+
+		// +(instancetype _Nonnull)mapWithFrame:(CGRect)frame mapID:(GMSMapID * _Nonnull)mapID camera:(GMSCameraPosition * _Nonnull)camera __attribute__((availability(swift, unavailable))) __attribute__((deprecated("Use -init or -initWithOptions: instead.")));
+		[Obsolete ("Use constructor with MapViewOptions instead.")]
+		[Static]
+		[Export ("mapWithFrame:mapID:camera:")]
+		MapView FromCamera (CGRect frame, MapId mapId, CameraPosition camera);
+
+		// -(instancetype _Nonnull)initWithFrame:(CGRect)frame camera:(GMSCameraPosition * _Nonnull)camera __attribute__((deprecated("Use -init or -initWithOptions: instead.")));
+		[Obsolete ("Use constructor with MapViewOptions instead.")]
+		[Export ("initWithFrame:camera:")]
+		NativeHandle Constructor (CGRect frame, CameraPosition camera);
+
+		// -(instancetype _Nonnull)initWithFrame:(CGRect)frame mapID:(GMSMapID * _Nonnull)mapID camera:(GMSCameraPosition * _Nonnull)camera __attribute__((deprecated("Use -init or -initWithOptions: instead.")));
+		[Obsolete ("Use constructor with MapViewOptions instead.")]
+		[Export ("initWithFrame:mapID:camera:")]
+		NativeHandle Constructor (CGRect frame, MapId mapId, CameraPosition camera);
 
 		[Obsolete ("This method is obsolete and will be removed in a future release.")]
 		[Export ("startRendering")]
@@ -679,18 +775,13 @@ namespace Google.Maps
 		[Export ("areEqualForRenderingPosition:position:")]
 		bool Equals (CameraPosition position, CameraPosition otherPosition);
 
-		///
-		/// From a category (GMSMapView+Premium.h)
-		///
+		// -(GMSFeatureLayer<GMSPlaceFeature *> * _Nonnull)featureLayerOfFeatureType:(GMSFeatureType _Nonnull)featureType __attribute__((swift_name("featureLayer(of:)")));
+		[Export ("featureLayerOfFeatureType:")]
+		FeatureLayer FeatureLayerOf (string featureType);
 
-		// +(instancetype _Nonnull)mapWithFrame:(CGRect)frame mapID:(GMSMapID * _Nonnull)mapID camera:(GMSCameraPosition * _Nonnull)camera __attribute__((availability(swift, unavailable)));		
-		[Static]
-		[Export ("mapWithFrame:mapID:camera:")]
-		MapView MapWithFrame (CGRect frame, MapId mapId, CameraPosition camera);
-
-		// -(instancetype _Nonnull)initWithFrame:(CGRect)frame mapID:(GMSMapID * _Nonnull)mapID camera:(GMSCameraPosition * _Nonnull)camera;
-		[Export ("initWithFrame:mapID:camera:")]
-		NativeHandle Constructor (CGRect frame, MapId mapId, CameraPosition camera);
+		// -(GMSDatasetFeatureLayer * _Nonnull)datasetFeatureLayerOfDatasetID:(NSString * _Nonnull)datasetID __attribute__((swift_name("datasetFeatureLayer(of:)")));
+		[Export ("datasetFeatureLayerOfDatasetID:")]
+		DatasetFeatureLayer DatasetFeatureLayerOf (string datasetId);
 	}
 
 	[BaseType (typeof (MapView))]
@@ -780,11 +871,10 @@ namespace Google.Maps
 		[Static]
 		[Export ("markerImageWithColor:")]
 		UIImage MarkerImage ([NullAllowed] UIColor color);
+	}
 
-		///
-		/// From a category (GMSMarker+Premium.h)
-		///
-
+	[BaseType (typeof (Marker), Name = "GMSAdvancedMarker")]
+	interface AdvancedMarker {
 		// @property (nonatomic) GMSCollisionBehavior collisionBehavior;
 		[Export ("collisionBehavior", ArgumentSemantic.Assign)]
 		CollisionBehavior CollisionBehavior { get; set; }
@@ -1045,9 +1135,6 @@ namespace Google.Maps
 	interface PanoramaView
 	{
 
-		[Export ("initWithFrame:")]
-		NativeHandle Constructor (CGRect frame);
-
 		[NullAllowed]
 		[Export ("panorama")]
 		Panorama Panorama { get; set; }
@@ -1191,6 +1278,10 @@ namespace Google.Maps
 		[Export ("geodesic")]
 		bool Geodesic { get; set; }
 
+		// @property (readonly, nonatomic) GMSPolygonLayer * _Nonnull layer;
+		[Export ("layer")]
+		PolygonLayer Layer { get; }
+
 		[Static]
 		[Export ("polygonWithPath:")]
 		Polygon FromPath ([NullAllowed] Path path);
@@ -1288,7 +1379,8 @@ namespace Google.Maps
 		[Export ("provideAPIOptions:")]
 		bool ProvideApiOptions (string [] apiOptions);
 
-		// + (void)setMetalRendererEnabled:(BOOL)enabled;
+		// +(void)setMetalRendererEnabled:(BOOL)enabled __attribute__((deprecated("Metal is now the default renderer if this API is not invoked. In the future, Metal rendering will be the only available implementation and this API will be a no-op. We encourage customers to remove calls to this method from their code.")));
+		[Obsolete ("Metal is now the default renderer if this API is not invoked. In the future, Metal rendering will be the only available implementation and this API will be a no-op. We encourage customers to remove calls to this method from their code.")]
 		[Static]
 		[Export ("setMetalRendererEnabled:")]
 		bool SetMetalRendererEnabled (bool enabled);
@@ -1327,6 +1419,11 @@ namespace Google.Maps
 		[Static]
 		[Export ("gradientFromColor:toColor:")]
 		StrokeStyle GetGradient (UIColor fromColor, UIColor toColor);
+
+		// +(instancetype _Nonnull)transparentStrokeWithStampStyle:(GMSStampStyle * _Nonnull)stampStyle;
+		[Static]
+		[Export ("transparentStrokeWithStampStyle:")]
+		StrokeStyle GetTransparentStroke (StampStyle stampStyle);
 	}
 
 	[DisableDefaultCtor]
@@ -1488,7 +1585,209 @@ namespace Google.Maps
 		NativeHandle Constructor (UIImage image);
 	}
 
-	#region Premium
+	// @interface GMSSpriteStyle : GMSStampStyle
+	[BaseType (typeof (StampStyle), Name = "GMSSpriteStyle")]
+	interface SpriteStyle {
+		// +(instancetype _Nonnull)spriteStyleWithImage:(UIImage * _Nonnull)image __attribute__((availability(swift, unavailable)));
+		[Static]
+		[Export ("spriteStyleWithImage:")]
+		SpriteStyle GetSpriteStyle (UIImage image);
+
+		// -(instancetype _Nonnull)initWithImage:(UIImage * _Nonnull)image __attribute__((objc_designated_initializer));
+		[Export ("initWithImage:")]
+		[DesignatedInitializer]
+		NativeHandle Constructor (UIImage image);
+	}
+
+	interface IFeature {
+
+	}
+
+#if NET
+    [Model]
+#else
+	[Model (AutoGeneratedName = true)]
+#endif
+	[Protocol]
+	[BaseType (typeof (NSObject), Name = "GMSFeature")]
+	interface Feature {
+		// @required -(GMSFeatureType _Nonnull)featureType;
+		[Abstract]
+		[Export ("featureType")]
+		string FeatureType { get; }
+	}
+
+	// @interface GMSDatasetFeature : NSObject <GMSFeature>
+	[BaseType (typeof (NSObject), Name = "GMSDatasetFeature")]
+	[DisableDefaultCtor]
+	interface DatasetFeature : Feature {
+		// @property (readonly, nonatomic) NSString * _Nonnull datasetID;
+		[Export ("datasetID")]
+		string DatasetId { get; }
+
+		// @property (readonly, nonatomic) NSDictionary<NSString *,NSString *> * _Nonnull datasetAttributes;
+		[Export ("datasetAttributes")]
+		NSDictionary<NSString, NSString> DatasetAttributes { get; }
+
+		// -(instancetype _Nonnull)initWithDatasetID:(NSString * _Nonnull)datasetID datasetAttributes:(NSDictionary<NSString *,NSString *> * _Nonnull)datasetAttributes __attribute__((objc_designated_initializer));
+		[Export ("initWithDatasetID:datasetAttributes:")]
+		[DesignatedInitializer]
+		NativeHandle Constructor (string datasetId, NSDictionary<NSString, NSString> datasetAttributes);
+	}
+
+	// audit-objc-generics: @interface GMSFeatureLayer<__covariant T : id<GMSFeature>> : NSObject
+	[BaseType (typeof (NSObject), Name = "GMSFeatureLayer")]
+	[DisableDefaultCtor]
+	interface FeatureLayer {
+		// @property (readonly, nonatomic) GMSFeatureType _Nonnull featureType;
+		[Export ("featureType")]
+		string FeatureType { get; }
+
+		// @property (readonly, getter = isAvailable, nonatomic) BOOL available;
+		[Export ("available")]
+		bool Available { [Bind ("isAvailable")] get; }
+
+		// @property (nonatomic) GMSFeatureStyle * _Nullable (^ _Nullable)(T _Nonnull) style;
+		[NullAllowed, Export ("style", ArgumentSemantic.Assign)]
+		Func<IFeature, FeatureStyle> Style { get; set; }
+
+		// -(instancetype _Nonnull)initWithFeatureType:(GMSFeatureType _Nonnull)featureType;
+		[Export ("initWithFeatureType:")]
+		NativeHandle Constructor (string featureType);
+	}
+
+	// @interface GMSDatasetFeatureLayer : GMSFeatureLayer
+	[BaseType (typeof (FeatureLayer), Name = "GMSDatasetFeatureLayer")]
+	interface DatasetFeatureLayer {
+		// @property (readonly, nonatomic) NSString * datasetID;
+		[Export ("datasetID")]
+		string DatasetId { get; }
+	}
+
+	// @interface GMSFeatureStyle : NSObject <NSCopying, NSMutableCopying>
+	[BaseType (typeof (NSObject), Name = "GMSFeatureStyle")]
+	interface FeatureStyle : INSCopying, INSMutableCopying {
+		// +(instancetype _Nonnull)styleWithFillColor:(UIColor * _Nullable)fillColor strokeColor:(UIColor * _Nullable)strokeColor strokeWidth:(CGFloat)strokeWidth __attribute__((availability(swift, unavailable)));
+		[Static]
+		[Export ("styleWithFillColor:strokeColor:strokeWidth:")]
+		FeatureStyle StyleWith ([NullAllowed] UIColor fillColor, [NullAllowed] UIColor strokeColor, nfloat strokeWidth);
+
+		// -(instancetype _Nonnull)initWithFillColor:(UIColor * _Nullable)fillColor strokeColor:(UIColor * _Nullable)strokeColor strokeWidth:(CGFloat)strokeWidth __attribute__((objc_designated_initializer));
+		[Export ("initWithFillColor:strokeColor:strokeWidth:")]
+		[DesignatedInitializer]
+		NativeHandle Constructor ([NullAllowed] UIColor fillColor, [NullAllowed] UIColor strokeColor, nfloat strokeWidth);
+
+		// @property (readonly, copy, nonatomic) UIColor * _Nullable fillColor;
+		[NullAllowed, Export ("fillColor", ArgumentSemantic.Copy)]
+		UIColor FillColor { get; }
+
+		// @property (readonly, copy, nonatomic) UIColor * _Nullable strokeColor;
+		[NullAllowed, Export ("strokeColor", ArgumentSemantic.Copy)]
+		UIColor StrokeColor { get; }
+
+		// @property (readonly, nonatomic) CGFloat strokeWidth;
+		[Export ("strokeWidth")]
+		nfloat StrokeWidth { get; }
+
+		// @property (readonly, nonatomic) CGFloat pointRadius;
+		[Export ("pointRadius")]
+		nfloat PointRadius { get; }
+
+		// -(GMSFeatureStyle * _Nonnull)copy;
+		[Export ("copy")]
+		[New]
+		FeatureStyle Copy ();
+
+		// -(GMSMutableFeatureStyle * _Nonnull)mutableCopy;
+		[Export ("mutableCopy")]
+		[New]
+		MutableFeatureStyle MutableCopy ();
+	}
+
+	// @interface GMSMutableFeatureStyle : GMSFeatureStyle
+	[BaseType (typeof (FeatureStyle), Name = "GMSMutableFeatureStyle")]
+	interface MutableFeatureStyle {
+		// +(instancetype _Nonnull)style __attribute__((availability(swift, unavailable)));
+		[Static]
+		[Export ("style")]
+		MutableFeatureStyle Style ();
+	}
+
+	// @interface GMSPlaceFeature : NSObject <GMSFeature>
+	[BaseType (typeof (NSObject), Name = "GMSPlaceFeature")]
+	[DisableDefaultCtor]
+	interface PlaceFeature : Feature {
+		// @property (readonly, nonatomic) GMSFeatureType _Nonnull featureType;
+		[Export ("featureType")]
+		string FeatureType { get; }
+
+		// @property (readonly, nonatomic) NSString * _Nonnull placeID;
+		[Export ("placeID")]
+		string PlaceId { get; }
+
+		// -(instancetype _Nonnull)initWithFeatureType:(GMSFeatureType _Nonnull)featureType placeID:(NSString * _Nonnull)placeID;
+		[Export ("initWithFeatureType:placeID:")]
+		NativeHandle Constructor (string featureType, string placeId);
+	}
+
+	// @interface GMSPinImage : UIImage
+	[BaseType (typeof (UIImage), Name = "GMSPinImage")]
+	[DisableDefaultCtor]
+	interface PinImage {
+		// +(GMSPinImage * _Nonnull)pinImageWithOptions:(GMSPinImageOptions * _Nonnull)options;
+		[Static]
+		[Export ("pinImageWithOptions:")]
+		PinImage GetPinImage (PinImageOptions options);
+	}
+
+	// @interface GMSPinImageGlyph : NSObject
+	[BaseType (typeof (NSObject), Name = "GMSPinImageGlyph")]
+	[DisableDefaultCtor]
+	interface PinImageGlyph {
+		// @property (readonly, nonatomic) NSString * _Nullable text;
+		[NullAllowed, Export ("text")]
+		string Text { get; }
+
+		// @property (readonly, nonatomic) UIColor * _Nullable textColor;
+		[NullAllowed, Export ("textColor")]
+		UIColor TextColor { get; }
+
+		// @property (readonly, nonatomic) UIImage * _Nullable image;
+		[NullAllowed, Export ("image")]
+		UIImage Image { get; }
+
+		// @property (readonly, nonatomic) UIColor * _Nullable glyphColor;
+		[NullAllowed, Export ("glyphColor")]
+		UIColor GlyphColor { get; }
+
+		// -(GMSPinImageGlyph * _Nonnull)initWithText:(NSString * _Nonnull)text textColor:(UIColor * _Nonnull)textColor;
+		[Export ("initWithText:textColor:")]
+		NativeHandle Constructor (string text, UIColor textColor);
+
+		// -(GMSPinImageGlyph * _Nonnull)initWithImage:(UIImage * _Nonnull)image;
+		[Export ("initWithImage:")]
+		NativeHandle Constructor (UIImage image);
+
+		// -(GMSPinImageGlyph * _Nonnull)initWithGlyphColor:(UIColor * _Nonnull)glyphColor;
+		[Export ("initWithGlyphColor:")]
+		NativeHandle Constructor (UIColor glyphColor);
+	}
+
+	// @interface GMSPinImageOptions : NSObject
+	[BaseType (typeof (NSObject), Name = "GMSPinImageOptions")]
+	interface PinImageOptions {
+		// @property (nonatomic) GMSPinImageGlyph * _Nullable glyph;
+		[NullAllowed, Export ("glyph", ArgumentSemantic.Assign)]
+		PinImageGlyph Glyph { get; set; }
+
+		// @property (nonatomic) UIColor * _Nullable backgroundColor;
+		[NullAllowed, Export ("backgroundColor", ArgumentSemantic.Assign)]
+		UIColor BackgroundColor { get; set; }
+
+		// @property (nonatomic) UIColor * _Nullable borderColor;
+		[NullAllowed, Export ("borderColor", ArgumentSemantic.Assign)]
+		UIColor BorderColor { get; set; }
+	}
 
 	// @interface GMSMapID : NSObject <NSCopying>
 	[DisableDefaultCtor]
@@ -1503,7 +1802,10 @@ namespace Google.Maps
 		[Static]
 		[Export ("mapIDWithIdentifier:")]
 		MapId MapIdWithIdentifier (string identifier);
-	}
 
-	#endregion
+		// @property (readonly, nonatomic, class) NS_SWIFT_NAME(demoMapID) GMSMapID * demoMapID __attribute__((swift_name("demoMapID")));
+		[Static]
+		[Export ("demoMapID")]
+		MapId DemoMapId { get; }
+	}
 }

@@ -6,7 +6,6 @@ using Foundation;
 using ObjCRuntime;
 using CoreGraphics;
 using CoreLocation;
-using Google.Maps;
 
 #if !NET
 using NativeHandle = System.IntPtr;
@@ -217,15 +216,6 @@ namespace Google.Places {
 		[NullAllowed]
 		[Export ("delegate", ArgumentSemantic.Weak)]
 		IAutocompleteResultsViewControllerDelegate Delegate { get; set; }
-
-		// @property(nonatomic, strong) GMSCoordinateBounds *autocompleteBounds;
-		[NullAllowed]
-		[Export ("autocompleteBounds", ArgumentSemantic.Strong)]
-		Google.Maps.CoordinateBounds AutocompleteBounds { get; set; }
-
-		// @property (assign, nonatomic) GMSAutocompleteBoundsMode autocompleteBoundsMode;
-		[Export ("autocompleteBoundsMode", ArgumentSemantic.Assign)]
-		AutocompleteBoundsMode AutocompleteBoundsMode { get; set; }
 
 		// @property(nonatomic, strong) GMSAutocompleteFilter *autocompleteFilter;
 		[NullAllowed]
@@ -767,8 +757,8 @@ namespace Google.Places {
 		void CurrentPlace (PlaceLikelihoodListHandler callback);
 
 		// -(void)findAutocompletePredictionsFromQuery:(NSString * _Nonnull)query bounds:(GMSCoordinateBounds * _Nullable)bounds boundsMode:(GMSAutocompleteBoundsMode)boundsMode filter:(GMSAutocompleteFilter * _Nullable)filter sessionToken:(GMSAutocompleteSessionToken * _Nonnull)sessionToken callback:(GMSAutocompletePredictionsCallback _Nonnull)callback;
-		[Export ("findAutocompletePredictionsFromQuery:bounds:boundsMode:filter:sessionToken:callback:")]
-		void FindAutocompletePredictions (string query, [NullAllowed] CoordinateBounds bounds, AutocompleteBoundsMode boundsMode, [NullAllowed] AutocompleteFilter filter, [NullAllowed] AutocompleteSessionToken sessionToken, AutocompletePredictionsHandler callback);
+		[Export ("findAutocompletePredictionsFromQuery:filter:sessionToken:callback:")]
+		void FindAutocompletePredictions (string query, [NullAllowed] AutocompleteFilter filter, [NullAllowed] AutocompleteSessionToken sessionToken, AutocompletePredictionsHandler callback);
 
 		// -(void)fetchPlaceFromPlaceID:(NSString * _Nonnull)placeID placeFields:(GMSPlaceField)placeFields sessionToken:(GMSAutocompleteSessionToken * _Nullable)sessionToken callback:(GMSPlaceResultCallback _Nonnull)callback;
 		[Export ("fetchPlaceFromPlaceID:placeFields:sessionToken:callback:")]

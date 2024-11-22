@@ -17,7 +17,6 @@ namespace ApiDefinition
 	{
 		static Messaging ()
 		{
-			Google.Maps.Loader.ForceLoad ();
 			Google.Places.Loader.ForceLoad ();
 		}
 	}

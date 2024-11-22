@@ -10,7 +10,7 @@
     <RootNamespace>Firebase.Core</RootNamespace>
     <AssemblyName>Firebase.Core</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
-    <FileVersion>10.24.0.1</FileVersion>
+    <FileVersion>10.29.0.1</FileVersion>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
@@ -26,7 +26,7 @@
     <PackageProjectUrl>https://github.com/AdamEssenmacher/GoogleApisForiOSComponents</PackageProjectUrl>
     <PackageLicenseFile>License.md</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageVersion>10.24.0.1</PackageVersion>
+    <PackageVersion>10.29.0.1</PackageVersion>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\..\AssemblyInfo.cs" />
@@ -93,10 +93,10 @@
       <_Id>$(_FirebaseSharedSwiftId)</_Id>
     </_NativeReference>
     <_NativeReference Include="..\..\..\externals\Promises.xcframework">
-      <_Id>$(_Promises)</_Id>
+      <_Id>$(_PromisesId)</_Id>
     </_NativeReference>
     <_NativeReference Include="..\..\..\externals\FirebaseSessions.xcframework">
-      <_Id>$(_FirebaseSessions)</_Id>
+      <_Id>$(_FirebaseSessionsId)</_Id>
     </_NativeReference>
   </ItemGroup>
   <!-- End of workaround -->
@@ -111,6 +111,6 @@
     <ObjcBindingApiDefinition Include="ApiDefinition.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true'" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Build.Download" Version="0.11.0" PrivateAssets="None" />
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" PrivateAssets="None" />
   </ItemGroup>
 </Project>
