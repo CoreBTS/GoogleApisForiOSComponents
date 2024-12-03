@@ -5,7 +5,12 @@ This was a really unfortunate decision from Microsoft. Having these extremely co
 
 Microsoft's current recommendation to iOS.NET developers is that they should write their own bindings using this [slim binding demo project](https://github.com/Redth/DotNet.Platform.SlimBindings) as a guide. However, developers following this approach can find their 'slim bindings' to be incompatible with any other published libraries with dependency conflicts, such as Plugin.Firebase.
 
-If these packages are important to you, please consider **[sponsoring the project](https://github.com/sponsors/AdamEssenmacher)**  and/or contributing to this fork. I'm a solo developer and considerably under-sponsored for this work.
+# Contributing & Sponsoring
+As a community-supported continuation, I'm happy to review any PRs to help move this project forward. These libraries almost certainly have some missing or stale bindings. Work needs to happen to keep these bindings current with native SDKs. Whole artifacts still need to be converted from where Microsoft left them. Sample projects need to be updated (or rewritten). Tests would be nice.
+
+If you're considering contributing, feel free to open an issue to discuss it and I'll help as I can.
+
+Alternatively, I have one-time sponsorship options on my profile if you'd like to prioritize an afternoon or weekend of my time on a feature or issue that's important to you.
 
 # (Important!) Installation Instructions and Usage Notes
 Failure to read and follow these instructions will result in build failures and/or runtime errors.
@@ -187,6 +192,7 @@ Instead, you should do:
     <PackageReference Include="AdamE.Firebase.iOS.Core" Version="10.24.0.2" />
 </ItemGroup>
 ```
+Or, it's the Z-zip issue below:
 
 ## 7-zip issues
 Try https://github.com/AdamEssenmacher/GoogleApisForiOSComponents/issues/21#issuecomment-2172949175
