@@ -38,7 +38,7 @@
     
     <Message Text="Uploading dSYM to Firebase Console using Firebase $(_FirebaseScriptName) script located at $(_FirebaseCrashlyticsSDKBaseFolder)" />
     <!-- Upload symbols to Firebase -->
-    <Exec Command="'$(_FirebaseCrashlyticsSDKBaseFolder)$(_FirebaseScriptName)' -gsp '$(MSBuildProjectDirectory)\GoogleService-Info.plist' -p ios '$(MSBuildProjectDirectory)\$(DeviceSpecificOutputPath)$(AssemblyName).app.dSYM'"
+    <Exec Command="'$(_FirebaseCrashlyticsSDKBaseFolder)$(_FirebaseScriptName)' -gsp '$(MSBuildProjectDirectory)\$(DeviceSpecificOutputPath)$(AssemblyName).app\GoogleService-Info.plist' -p ios '$(MSBuildProjectDirectory)\$(DeviceSpecificOutputPath)$(AssemblyName).app.dSYM'"
       ContinueOnError="$(_FirebaseCrashlyticsUploadSymbolsContinueOnError)" />
   </Target>
   <!-- Target to upload dSYM symbols to Firebase when using Visual Studio for Windows -->
@@ -56,7 +56,7 @@
     
     <Message Text="Uploading dSYM to Firebase Console using Firebase $(_FirebaseScriptName) script" />
     <!-- Upload symbols to Firebase -->
-    <Exec SessionId="$(BuildSessionId)" Command="'./$(_FirebaseScriptName)' -gsp './GoogleService-Info.plist' -p ios './$(DeviceSpecificOutputPath)$(AssemblyName).app.dSYM'" ContinueOnError="$(_FirebaseCrashlyticsUploadSymbolsContinueOnError)" />
+    <Exec SessionId="$(BuildSessionId)" Command="'./$(_FirebaseScriptName)' -gsp './$(DeviceSpecificOutputPath)$(AssemblyName).app/GoogleService-Info.plist' -p ios './$(DeviceSpecificOutputPath)$(AssemblyName).app.dSYM'" ContinueOnError="$(_FirebaseCrashlyticsUploadSymbolsContinueOnError)" />
   </Target>
   <PropertyGroup>
     <_FirebaseCrashlyticsId>FirebaseCrashlytics</_FirebaseCrashlyticsId>

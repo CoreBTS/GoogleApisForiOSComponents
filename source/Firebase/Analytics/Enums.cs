@@ -14,7 +14,15 @@ namespace Firebase.Analytics
         // extern FIRConsentType const FIRConsentTypeAnalyticsStorage;
 		[Field ("FIRConsentTypeAnalyticsStorage", "__Internal")]
 		AnalyticsStorage,
-    }
+
+		// extern FIRConsentType const FIRConsentTypeAdUserData;
+		[Field ("FIRConsentTypeAdUserData", "__Internal")]
+		AdUserData,
+
+		// extern FIRConsentType const FIRConsentTypeAdPersonalization;
+		[Field ("FIRConsentTypeAdPersonalization", "__Internal")]
+		AdPersonalization,
+	}
 
     public enum ConsentStatus {
 		// extern FIRConsentStatus const FIRConsentStatusDenied;
