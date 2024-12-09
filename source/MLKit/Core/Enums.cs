@@ -1,18 +1,18 @@
 ﻿using System;
 using ObjCRuntime;
+using Foundation;
 
 namespace MLKit.Core {
 	[Native]
 	public enum ImageSourceType : long {
-		Image = 0,
-		PixelBuffer = 1,
-		SampleBuffer = 2
+		ImageSourceTypeImage = 0,
+		ImageSourceTypePixelBuffer = 1,
+		ImageSourceTypeSampleBuffer = 2
 	}
 
-	[Native]
-	public enum ModelDownloadUserInfoKey : long
+	public static class ModelDownloadUserInfoKeyConstants
 	{
-		RemoteModel,
-		Error
+		public static NSString MLKModelDownloadUserInfoKeyRemoteModel { get; } = new NSString("MLKModelDownloadUserInfoKeyRemoteModel");
+		public static NSString MLKModelDownloadUserInfoKeyError { get; } = new NSString("MLKModelDownloadUserInfoKeyError");
 	}
 }
