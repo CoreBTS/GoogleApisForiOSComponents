@@ -1,3 +1,7 @@
+// Shared Reference Artifacts
+Artifact SHARED_NANOPB_ARTIFACT                    = new Artifact ("nanopb",                          "3.30910.0-alpha1", "12.0", ComponentGroup.Shared, csprojName: "nanopb");
+Artifact SHARED_PROMISESOBJC_ARTIFACT              = new Artifact ("PromisesObjC",                    "2.4.0-alpha1",     "9.0",  ComponentGroup.Shared, csprojName: "PromisesObjC");
+
 // Firebase artifacts available to be built. These artifacts generate NuGets.
 Artifact FIREBASE_AB_TESTING_ARTIFACT              = new Artifact ("Firebase.ABTesting",              "10.29.0.1",        "11.0", ComponentGroup.Firebase, csprojName: "ABTesting");
 Artifact FIREBASE_ANALYTICS_ARTIFACT               = new Artifact ("Firebase.Analytics",              "10.29.0.2",        "11.0", ComponentGroup.Firebase, csprojName: "Analytics");
@@ -43,6 +47,9 @@ Artifact MLKIT_IMAGE_LABELING                    = new Artifact ("MLKit.ImageLab
 Artifact MLKIT_OBJECT_DETECTION                  = new Artifact ("MLKit.ObjectDetection",             "6.0.0",    "13.0", ComponentGroup.MLKit, csprojName: "ObjectDetection");
 
 var ARTIFACTS = new Dictionary<string, Artifact> {
+	{ "nanopb",						     SHARED_NANOPB_ARTIFACT },
+	{ "PromisesObjC", 				     SHARED_PROMISESOBJC_ARTIFACT },
+
 	{ "Firebase.ABTesting",              FIREBASE_AB_TESTING_ARTIFACT },
 	{ "Firebase.Analytics",              FIREBASE_ANALYTICS_ARTIFACT },
 	{ "Firebase.Auth",                   FIREBASE_AUTH_ARTIFACT },
@@ -114,7 +121,7 @@ void SetArtifactsDependencies ()
 	GOOGLE_SIGN_IN_ARTIFACT.Dependencies      = new [] { FIREBASE_CORE_ARTIFACT };
 	GOOGLE_TAG_MANAGER_ARTIFACT.Dependencies  = new [] { FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT, FIREBASE_ANALYTICS_ARTIFACT };
 
-	MLKIT_CORE_ARTIFACT.Dependencies                = new [] { FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT };
+	MLKIT_CORE_ARTIFACT.Dependencies                = new [] { SHARED_NANOPB_ARTIFACT, SHARED_PROMISESOBJC_ARTIFACT, FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT };
 	MLKIT_TEXT_RECOGNITION.Dependencies             = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
 	MLKIT_VISION.Dependencies                       = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
 	MLKIT_TEXT_RECOGNITION_LATIN.Dependencies       = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
@@ -123,7 +130,7 @@ void SetArtifactsDependencies ()
 	MLKIT_TEXT_RECOGNITION_JAPANESE.Dependencies    = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
 	MLKIT_TEXT_RECOGNITION_KOREAN.Dependencies      = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
 	MLKIT_FACE_DETECTION.Dependencies               = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
-	MLKIT_BARCODE_SCANNING.Dependencies             = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
+	MLKIT_BARCODE_SCANNING.Dependencies             = new [] { MLKIT_CORE_ARTIFACT };
 	MLKIT_DIGITAL_INK_RECOGNITION.Dependencies      = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
 	MLKIT_IMAGE_LABELING.Dependencies               = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_VISION };
 	MLKIT_OBJECT_DETECTION.Dependencies             = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_VISION };
@@ -131,6 +138,14 @@ void SetArtifactsDependencies ()
 
 void SetArtifactsPodSpecs ()
 {
+	// Shared components
+	SHARED_NANOPB_ARTIFACT.PodSpecs = new [] {
+		PodSpec.Create ("nanopb", "3.30910.0", frameworkSource: FrameworkSource.Pods)
+	};
+	SHARED_PROMISESOBJC_ARTIFACT.PodSpecs = new [] {
+		PodSpec.Create ("PromisesObjC", "2.4.0", frameworkSource: FrameworkSource.Pods, frameworkName: "FBLPromises", targetName: "PromisesObjC")
+	};
+	
 	// Firebase components
 	FIREBASE_AB_TESTING_ARTIFACT.PodSpecs = new [] { 
 		PodSpec.Create ("FirebaseABTesting", "10.29.0", frameworkSource: FrameworkSource.Pods)

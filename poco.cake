@@ -2,7 +2,8 @@ enum ComponentGroup
 {
 	Firebase,
 	Google,
-	MLKit
+	MLKit,
+	Shared
 }
 
 enum FrameworkSource
