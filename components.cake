@@ -22,7 +22,9 @@ Artifact FIREBASE_STORAGE_ARTIFACT                 = new Artifact ("Firebase.Sto
 // Artifact FIREBASE_APP_CHECK_ARTIFACT               = new Artifact ("Firebase.AppCheck",               "8.10.0.1",   "11.0", ComponentGroup.Firebase, csprojName: "AppCheck");
 
 // Google artifacts available to be built. These artifacts generate NuGets.
-Artifact GOOGLE_ANALYTICS_ARTIFACT    = new Artifact ("Google.Analytics",             "3.20.0.2", "11.0",  ComponentGroup.Google, csprojName: "Analytics");
+Artifact GOOGLE_DATA_TRANSPORT_ARTIFACT = new Artifact ("Google.GoogleDataTransport", "10.1.0-alpha1",   "12.0", ComponentGroup.Google, csprojName: "GoogleDataTransport");
+Artifact GOOGLE_GTM_SESSION_FETCHER_ARTIFACT = new Artifact ("Google.GTMSessionFetcher", "3.5.0-alpha1", "10.0", ComponentGroup.Google, csprojName: "GTMSessionFetcher");
+Artifact GOOGLE_ANALYTICS_ARTIFACT    = new Artifact ("Google.Analytics",             "3.20.0.2", "11.0", ComponentGroup.Google, csprojName: "Analytics");
 Artifact GOOGLE_CAST_ARTIFACT         = new Artifact ("Google.Cast",                  "4.7.0.1",  "12.0", ComponentGroup.Google, csprojName: "Cast");
 Artifact GOOGLE_MAPS_ARTIFACT         = new Artifact ("Google.Maps",                  "9.1.1.2",  "15.0", ComponentGroup.Google, csprojName: "Maps");
 Artifact GOOGLE_MOBILE_ADS_ARTIFACT   = new Artifact ("Google.MobileAds",             "8.13.0.3", "11.0", ComponentGroup.Google, csprojName: "MobileAds");
@@ -68,6 +70,8 @@ var ARTIFACTS = new Dictionary<string, Artifact> {
 	// { "Firebase.AppDistribution",        FIREBASE_APP_DISTRIBUTION_ARTIFACT },
 	// { "Firebase.AppCheck",               FIREBASE_APP_CHECK_ARTIFACT },
 
+	{ "Google.GoogleDataTransport",   GOOGLE_DATA_TRANSPORT_ARTIFACT },
+	{ "Google.GTMSessionFetcher",     GOOGLE_GTM_SESSION_FETCHER_ARTIFACT },
 	{ "Google.Analytics",             GOOGLE_ANALYTICS_ARTIFACT },
 	{ "Google.Cast",                  GOOGLE_CAST_ARTIFACT },	
 	{ "Google.Maps",                  GOOGLE_MAPS_ARTIFACT },
@@ -94,6 +98,9 @@ var ARTIFACTS = new Dictionary<string, Artifact> {
 
 void SetArtifactsDependencies ()
 {
+	SHARED_NANOPB_ARTIFACT.Dependencies                     = null;
+	SHARED_PROMISESOBJC_ARTIFACT.Dependencies                = null;
+
 	FIREBASE_AB_TESTING_ARTIFACT.Dependencies              = new [] { FIREBASE_CORE_ARTIFACT };
 	FIREBASE_ANALYTICS_ARTIFACT.Dependencies               = new [] { FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT };
 	FIREBASE_AUTH_ARTIFACT.Dependencies                    = new [] { FIREBASE_CORE_ARTIFACT, /* Needed for sample GOOGLE_SIGN_IN_ARTIFACT */ };
@@ -112,6 +119,8 @@ void SetArtifactsDependencies ()
 	// FIREBASE_APP_DISTRIBUTION_ARTIFACT.Dependencies        = new [] { FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT };
 	// FIREBASE_APP_CHECK_ARTIFACT.Dependencies               = new [] { FIREBASE_CORE_ARTIFACT };
 
+	GOOGLE_DATA_TRANSPORT_ARTIFACT.Dependencies = new [] { SHARED_NANOPB_ARTIFACT, SHARED_PROMISESOBJC_ARTIFACT };
+	GOOGLE_GTM_SESSION_FETCHER_ARTIFACT.Dependencies = null;
 	GOOGLE_ANALYTICS_ARTIFACT.Dependencies    = null;
 	GOOGLE_CAST_ARTIFACT.Dependencies         = new [] { FIREBASE_CORE_ARTIFACT };
 	GOOGLE_MAPS_ARTIFACT.Dependencies         = null;
@@ -121,7 +130,7 @@ void SetArtifactsDependencies ()
 	GOOGLE_SIGN_IN_ARTIFACT.Dependencies      = new [] { FIREBASE_CORE_ARTIFACT };
 	GOOGLE_TAG_MANAGER_ARTIFACT.Dependencies  = new [] { FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT, FIREBASE_ANALYTICS_ARTIFACT };
 
-	MLKIT_CORE_ARTIFACT.Dependencies                = new [] { SHARED_NANOPB_ARTIFACT, SHARED_PROMISESOBJC_ARTIFACT, FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT };
+	MLKIT_CORE_ARTIFACT.Dependencies                = new [] { GOOGLE_DATA_TRANSPORT_ARTIFACT, FIREBASE_CORE_ARTIFACT, FIREBASE_INSTALLATIONS_ARTIFACT };
 	MLKIT_TEXT_RECOGNITION.Dependencies             = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
 	MLKIT_VISION.Dependencies                       = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT };
 	MLKIT_TEXT_RECOGNITION_LATIN.Dependencies       = new [] { FIREBASE_CORE_ARTIFACT, MLKIT_CORE_ARTIFACT, MLKIT_TEXT_RECOGNITION };
@@ -223,6 +232,12 @@ void SetArtifactsPodSpecs ()
 	// };
 
 	// Google components
+	GOOGLE_DATA_TRANSPORT_ARTIFACT.PodSpecs = new [] {
+		PodSpec.Create ("GoogleDataTransport", "10.1.0", frameworkSource: FrameworkSource.Pods)
+	};
+	GOOGLE_GTM_SESSION_FETCHER_ARTIFACT.PodSpecs = new [] {
+		PodSpec.Create ("GTMSessionFetcher", "3.5.0", frameworkSource: FrameworkSource.Pods, subSpecs: new [] { "Full" })
+	};
 	GOOGLE_ANALYTICS_ARTIFACT.PodSpecs = new [] {
 		PodSpec.Create ("GoogleAnalytics", "3.20.0")
 	};

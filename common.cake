@@ -74,7 +74,7 @@ string GetMinimunSupportedVersion (Artifact artifact)
 		return version;
 
 	foreach (var dependency in artifact.Dependencies)
-		if (string.Compare (version, dependency.MinimunSupportedVersion) == -1)
+		if (System.Version.Parse(version) < System.Version.Parse(dependency.MinimunSupportedVersion))
 			version = dependency.MinimunSupportedVersion;
 
 	return version;

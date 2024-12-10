@@ -1,0 +1,71 @@
+﻿<Project Sdk="Xamarin.Legacy.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>xamarin.ios10;net6.0-ios</TargetFrameworks>
+    <NoNFloatUsing Condition="'$(TargetFramework)' == 'xamarin.ios10'">true</NoNFloatUsing>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <IsBindingProject>true</IsBindingProject>
+    <NoBindingEmbedding>true</NoBindingEmbedding>
+    <SupportedOSPlatformVersion>12.0</SupportedOSPlatformVersion>
+    <RootNamespace>GTMSessionFetcher</RootNamespace>
+    <AssemblyName>GTMSessionFetcher</AssemblyName>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>3.5.0-alpha1</FileVersion>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>AdamE.GTMSessionFetcher</PackageId>
+    <Title>GTMSessionFetcher iOS Library</Title>
+    <Summary>C# bindings for GTMSessionFetcher iOS Library</Summary>
+    <Description>C# bindings for GTMSessionFetcher iOS Library</Description>
+    <Authors>Microsoft, Adam Essenmacher</Authors>
+    <Owners>Adam Essenmacher</Owners>
+    <Copyright>© Microsoft Corporation. All rights reserved. © 2024, Adam Essenmacher.</Copyright>
+    <PackageIcon>firebaseioscore_128x128.png</PackageIcon>
+    <PackageProjectUrl>https://github.com/AdamEssenmacher/GoogleApisForiOSComponents</PackageProjectUrl>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageVersion>3.5.0-alpha1</PackageVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\..\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+  <ItemGroup>    
+    <None Include="GTMSessionFetcher.targets" Pack="True" PackagePath="build/AdamE.Google.GTMSessionFetcher.targets" />
+    <None Include="GTMSessionFetcher.targets" Pack="True" PackagePath="buildTransitive/AdamE.Google.GTMSessionFetcher.targets" />
+    <None Include="External-Dependency-Info.txt" Pack="True" PackagePath="THIRD-PARTY-NOTICES.txt" />
+    <None Include="License.md" Pack="True" PackagePath="License.md" />
+    <None Include="../../../icons/firebaseioscore_128x128.png" Pack="True" PackagePath="firebaseioscore_128x128.png" />
+  </ItemGroup>
+  <!-- An iOS app project cannot find Xcframeworks within a NuGet if a TFM
+       previous than net6.0-ios is used.
+       https://github.com/xamarin/xamarin-macios/issues/13693
+       You must include the Xcframework's NativeReference tag into the iOS app
+       project so sidecar can work properly. -->
+  <!-- This workaround was designed like this to have the same
+       NativeReference tag for the iOS binding and for the .targets file -->
+  <Import Project="GTMSessionFetcher.targets" />
+  <ItemGroup>
+    <_NativeReference Include="..\..\..\externals\GTMSessionFetcher.xcframework">
+      <_Id>$(_GTMSessionFetcherId)</_Id>
+    </_NativeReference>
+  </ItemGroup>
+  <!-- End of workaround -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'xamarin.ios10'">
+    <Compile Remove="ApiDefinition.cs" />
+    <Compile Remove="Enums.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ObjcBindingCoreSource Include="Enums.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true'" />
+  </ItemGroup>
+  <ItemGroup>
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true'" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Build.Download" Version="0.11.4" PrivateAssets="None" />
+  </ItemGroup>
+</Project>
